@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Calculator</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }                                                   /*SELECTS ALL ELEMENTS*/
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e6f7ff;
+        }                                                   /*FOR BODY OF THE PAGE*/
+
+        .container {
+            border: 2px solid green;
+            background-color: white;
+            width: 80%;
+            max-width: 350px;
+            padding: 20px;
+            margin: 100px auto;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;    
+        }                                                   /*FOR CONTAINER OF CALC.*/
+
+        .display {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            font-size: 2em;
+            text-align: right;      
+            border: 1px solid #ccc;                         /*FOR DISPLAY*/
+            border-radius: 5px;
+        }
+
+        .btn {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: space-between;                 /*FOR BUTTONS*/
+        }
+
+        .button {
+            padding: 15px;
+            font-size: 1.5em;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 22%;
+            text-align: center;                             /*BUTTON */
+        }
+
+        .button:hover {
+            background-color: #d0e6ff;
+        }
+
+        .button:active {
+            background-color: #a3c8ff;
+        }
+
+        .button:disabled {
+            background-color: #f1f1f1;
+            cursor: not-allowed;
+        }
+
+        .button.full-width {
+            width: 48%;
+        }
+    </style>
+    <script>
+        function appendToDisplay(value) {
+            document.getElementById('display').value += value;
+        }
+
+        function clearDisplay() {
+            document.getElementById('display').value = '';
+        }
+
+        function calculateResult() {
+            const display = document.getElementById('display');
+            try {
+                display.value = Function('return ' + display.value)();
+            } catch {
+                display.value = 'Error';
+            }
+        }
+
+        function backspace() {
+            const display = document.getElementById('display');
+            display.value = display.value.slice(0, -1);
+        }
+    </script>
+</head>
+<body> 
+    <div class="container">
+        <form name="calculator">
+            <input id="display" type="text" name="display" readonly class="display" />
+            <div class="btn">
+                <input class="button" type="button" value="AC" onclick="clearDisplay()" />
+                <input class="button" type="button" value="%" onclick="appendToDisplay('%')" />
+                <input class="button" type="button" value="/" onclick="appendToDisplay('/')" />
+                <input class="button" type="button" value="←" onclick="backspace()" />
+            </div>
+            <div class="btn">
+                <input class="button" type="button" value="7" onclick="appendToDisplay('7')" />
+                <input class="button" type="button" value="8" onclick="appendToDisplay('8')" />
+                <input class="button" type="button" value="9" onclick="appendToDisplay('9')" />
+                <input class="button" type="button" value="*" onclick="appendToDisplay('*')" />
+            </div>
+            <div class="btn">
+                <input class="button" type="button" value="4" onclick="appendToDisplay('4')" />
+                <input class="button" type="button" value="5" onclick="appendToDisplay('5')" />
+                <input class="button" type="button" value="6" onclick="appendToDisplay('6')" />
+                <input class="button" type="button" value="-" onclick="appendToDisplay('-')" />
+            </div>
+            <div class="btn">
+                <input class="button" type="button" value="1" onclick="appendToDisplay('1')" />
+                <input class="button" type="button" value="2" onclick="appendToDisplay('2')" />
+                <input class="button" type="button" value="3" onclick="appendToDisplay('3')" />
+                <input class="button" type="button" value="+" onclick="appendToDisplay('+')" />
+            </div>
+            <div class="btn">
+                <input class="button full-width" type="button" value="00" onclick="appendToDisplay('00')" />
+                <input class="button" type="button" value="0" onclick="appendToDisplay('0')" />
+                <input class="button" type="button" value="." onclick="appendToDisplay('.')" />
+                <input class="button full-width" type="button" value="=" onclick="calculateResult()" />
+            </div>
+        </form>
+    </div>
+</body>
+</html>
